@@ -1,17 +1,21 @@
 package org.parcial_23_05_23;
 
-public class Constructora {
-    Cemento cemento;
-    Canio canio;
-    Pintura pintura;
+import java.util.ArrayList;
 
-    public Constructora(Cemento cemento, Canio canio, Pintura pintura) {
-        this.cemento = cemento;
-        this.canio = canio;
-        this.pintura = pintura;
+public class Constructora {
+
+    private final ArrayList<Material> materiales;
+
+    public Constructora(Material material) {
+        materiales = new ArrayList<>();
+        materiales.add(material);
     }
 
-    public void construir(Edificable edificable) {
-        edificable.construir(cemento, canio, pintura);
+    public void agregarMaterial(Material material) {
+        materiales.add(material);
+    }
+
+    public void construir(Edificable edificable) throws MaterialNoEncontradoError {
+        edificable.construir(materiales);
     }
 }

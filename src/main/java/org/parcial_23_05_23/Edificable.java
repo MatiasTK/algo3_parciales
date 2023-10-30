@@ -1,5 +1,7 @@
 package org.parcial_23_05_23;
 
+import java.util.ArrayList;
+
 public interface Edificable {
-    void construir(Cemento cemento, Canio canio, Pintura pintura);
+    void construir(ArrayList<Material> materiales) throws MaterialNoEncontradoError;
 }

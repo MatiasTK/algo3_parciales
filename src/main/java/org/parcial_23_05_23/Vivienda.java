@@ -1,35 +1,57 @@
 package org.parcial_23_05_23;
 
+import java.util.ArrayList;
+
 public class Vivienda implements Edificable {
-    private int ambientes;
-    private int cantidadCementoBase;
-    private int cantidadCementoAmbiente;
-    private int cantidadCanioAmbiente;
-    private int cantidadPinturaAmbiente;
+    private ArrayList<Material> materialesBase;
+    private ArrayList<Material> materialesAmbiente;
+    private final int ambientes;
+
+    private void inicializarMaterialesBase() {
+        materialesBase = new ArrayList<>();
+        materialesBase.add(new Cemento(50));
+    }
+
+    private void inicializarMaterialesAmbiente() {
+        materialesAmbiente = new ArrayList<>();
+        materialesAmbiente.add(new Cemento(10));
+        materialesAmbiente.add(new Canio(100));
+        materialesAmbiente.add(new Pintura(500));
+    }
 
     public Vivienda(int cantidadAmbientes) {
         ambientes = cantidadAmbientes;
-        cantidadCementoBase = 50;
-        cantidadCementoAmbiente = 10;
-        cantidadCanioAmbiente = 100;
-        cantidadPinturaAmbiente = 500;
-
+        inicializarMaterialesBase();
+        inicializarMaterialesAmbiente();
     }
 
-    private void construirBase(Cemento cemento) {
-        cemento.usar(cantidadCementoBase);
+    private Material encontrarMaterial(ArrayList<Material> materialesEnExistencia, Material materialABuscar) throws MaterialNoEncontradoError {
+        for (Material materialNecesario : materialesEnExistencia) {
+            if (materialNecesario.getClass().equals(materialABuscar.getClass())) {
+                return materialNecesario;
+            }
+        }
+        throw new MaterialNoEncontradoError();
     }
 
-    private void construirAmbiente(Cemento cemento, Canio canio, Pintura pintura) {
-        cemento.usar(cantidadCementoAmbiente);
-        canio.usar(cantidadCanioAmbiente);
-        pintura.usar(cantidadPinturaAmbiente);
+    private void construirBase(ArrayList<Material> materiales) throws MaterialNoEncontradoError {
+        for (Material materialNecesario : materialesBase) {
+            Material material = encontrarMaterial(materiales, materialNecesario);
+            material.usar(materialNecesario);
+        }
     }
 
-    public void construir(Cemento cemento, Canio canio, Pintura pintura) {
-        construirBase(cemento);
+    private void construirAmbiente(ArrayList<Material> materiales) throws MaterialNoEncontradoError {
+        for (Material materialNecesario : materialesAmbiente) {
+            Material material = encontrarMaterial(materiales, materialNecesario);
+            material.usar(materialNecesario);
+        }
+    }
+
+    public void construir(ArrayList<Material> materiales) throws MaterialNoEncontradoError {
+        construirBase(materiales);
         for (int i = 0; i < ambientes; i++) {
-            construirAmbiente(cemento, canio, pintura);
+            construirAmbiente(materiales);
         }
     }
 }

@@ -7,11 +7,12 @@ public class Pintura implements Material {
         this.cantidad = cantidad;
     }
 
-    public void usar(int cantidadAUsar) {
-        this.cantidad -= cantidadAUsar;
-    }
-
     public int getCantidad() {
         return cantidad;
+    }
+
+    @Override
+    public void usar(Material materialAUsar) {
+        cantidad -= materialAUsar.getCantidad();
     }
 }

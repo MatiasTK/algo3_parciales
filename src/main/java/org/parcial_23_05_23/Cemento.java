@@ -7,8 +7,9 @@ public class Cemento implements Material {
         this.cantidad = cantidad;
     }
 
-    public void usar(int cantidadAUsar) {
-        this.cantidad -= cantidadAUsar;
+    @Override
+    public void usar(Material materialAUsar) {
+        cantidad -= materialAUsar.getCantidad();
     }
 
     public int getCantidad() {

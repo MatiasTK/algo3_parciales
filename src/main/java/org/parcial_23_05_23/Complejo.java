@@ -11,9 +11,9 @@ public class Complejo implements Edificable {
     }
 
     @Override
-    public void construir(Cemento cemento, Canio canio, Pintura pintura) {
+    public void construir(ArrayList<Material> materialesEnExistencia) throws MaterialNoEncontradoError {
         for (Edificable edificable : conjunto) {
-            edificable.construir(cemento, canio, pintura);
+            edificable.construir(materialesEnExistencia);
         }
     }
 }

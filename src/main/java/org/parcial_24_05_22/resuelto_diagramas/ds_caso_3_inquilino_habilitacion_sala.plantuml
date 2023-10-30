@@ -1,0 +1,23 @@
+@startuml
+
+/'
+' Inquilino
+' Inquilino
+' EspacioComun
+'/
+
+":Testcase" -> ":Inquilino": puedeReservar(sala, fecha)
+":Inquilino" -> ":Habilitacion": vecesUso()
+return [10]
+":Inquilino" -> "sala:Sala": puedoUsar(self, 10, fecha)
+"sala:Sala" -> "sala:Sala": superaMaximo(self, 10, fecha)
+activate "sala:Sala"
+        loop para todo 
+                "sala:Sala" -> ":Ingreso": devolveUnoSiElHabitanteVinoMismoMes(self, fecha)
+        end
+deactivate "sala:Sala"
+"sala:Sala" --> ":Inquilino": true
+":Inquilino" --> ":Testcase": true
+
+
+@enduml

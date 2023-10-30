@@ -1,0 +1,25 @@
+@startuml
+
+/'
+' Inquilino
+' Inquilino
+' EspacioComun
+'/
+
+":Testcase" -> ":Inquilino": puedeReservar(picina, fecha)
+
+/'
+ ' Porque 'self'? Seguro le vas a pedir algo.  
+ '/
+":Inquilino" -> ":Piscina": puedoUsar(self, 10, fecha)
+":Piscina" -> ":Piscina": superaMaximo(self, 10, fecha)
+activate ":Piscina"
+        loop para todo 
+                ":Piscina" -> ":Ingreso": devolveUnoSiElHabitanteVinoMismoMes(self, fecha)
+        end
+deactivate ":Piscina"
+":Piscina" --> ":Inquilino": true
+":Inquilino" --> ":Testcase": true
+
+
+@enduml

@@ -1,0 +1,25 @@
+@startuml
+
+/'
+' Inquilino
+' Inquilino
+' EspacioComun
+'/
+
+":Testcase" -> ":Inquilino": puedeReservar(sum)
+
+/'
+ ' Porque 'self'? Seguro le vas a pedir algo.  
+ '/
+":Inquilino" -> ":SUM": puedoUsar(self, 1)
+":SUM" -> ":SUM": superaMaximo(self, 1)
+activate ":SUM"
+        loop para todo 
+                ":SUM" -> ":Ingreso": devolveUnoSiElHabitanteVinoMismoMes(self, fecha)
+        end
+deactivate ":SUM"
+":SUM" --> ":Inquilino": false
+":Inquilino" --> ":Testcase": false
+
+
+@enduml

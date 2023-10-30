@@ -1,0 +1,96 @@
+@startuml
+
+abstract class Habitante {
+        /'
+        ' + maximaCantidadDeVecesQuePuedeIraLaPileta : int
+        '/
+        maxPileta : int
+        maxSum : int
+
+        id : ID
+
+        + {abstract} initialize()
+        + equals(other)
+        + puedeReservar(Sala, unaFecha)
+        + puedeReservar(Sum, unaFecha)
+        + puedeReservar(Piscina, unaFecha)
+
+}
+
+class Habilitacion {
+        + vecesUso()
+}
+
+class Inquilino {
+        + initialize()
+}
+
+class Propietario {
+        + initialize()
+}
+
+
+
+
+class EspacioComun {
+        + superaMaximo(habitante, maximoPosible, unaFecha)
+        + ingresosPara(habitante) 
+        + puedeUsar(unHabitante, unMaximo, unaFecha)
+
+}
+
+class EspacioComun
+note left:  "Delegando todo a espacio común, evitamos las clases vacias."
+
+class Ingreso {
+        - fecha : Fecha
+
+        + devuelveUnoSiElHabitanteVinoMismoMes(Habitante, unaFecha)
+}
+
+class Piscina {
+}
+
+class SUM {
+}
+
+Habitante <|-- Propietario
+Habitante <|-- Inquilino
+
+Habitante *- Habilitacion
+
+EspacioComun *- "0..*" Ingreso
+
+Ingreso o-- Habitante
+
+note right of Inquilino::initialize
+maxPileta = 5
+maxSUM = 1
+
+end note
+
+
+class Piscina {
+        + superaMaximo(habitante, maximoPosible, unaFecha)
+        + ingresosPara(habitante) 
+        + puedeUsar(unHabitante, unMaximo, unaFecha)
+}
+
+class SUM {
+        + superaMaximo(habitante, maximoPosible, unaFecha)
+        + ingresosPara(habitante) 
+        + puedeUsar(unHabitante, unMaximo, unaFecha)
+}
+
+class Sala {
+        + superaMaximo(habitante, maximoPosible, unaFecha)
+        + ingresosPara(habitante) 
+        + puedeUsar(unHabitante, unMaximo, unaFecha)
+}
+
+Piscina *-- EspacioComun
+Sala *-- EspacioComun
+SUM *-- EspacioComun
+
+
+@enduml

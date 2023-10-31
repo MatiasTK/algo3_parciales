@@ -1,0 +1,52 @@
+@startuml
+class Agencia{
+    + comprarEntradas(entradasAComprar: ArrayList<Entrada>, metodoPago: MetodoPago)
+}
+
+abstract Entrada{
+    + Entrada(precio: int, pagosSoportados: ArrayList<Entrada>)
+    - pagada: boolean
+    - pagosSoportados: ArrayList<Entrada>
+    - precio: int
+    - soporta(metodoPago: MetodoPago)
+    + comprar(metodoPago: MetodoPago)
+    + pagar()
+    + estaPagada()
+}
+
+class TipoA{
+    + TipoA()
+}
+
+class TipoB {
+    + TipoB()
+}
+
+interface MetodoPago{
+    + pagar(precio: int entrada: Entrada)
+}
+
+class Gold {
+    + Gold()
+    - limiteCompras: int
+    + pagar(precio: int, entrada: Entrada)
+}
+
+class PertenenciaH{
+    + PertenenciaH()
+    + pagar(precio: int entrada: Entrada)
+}
+
+Entrada <|-- TipoA
+Entrada <|-- TipoB
+
+MetodoPago <|-- Gold
+MetodoPago <|-- PertenenciaH
+
+Agencia ..> MetodoPago
+Agencia ..> Entrada
+
+Entrada o- "*" MetodoPago
+MetodoPago .> Entrada
+
+@enduml

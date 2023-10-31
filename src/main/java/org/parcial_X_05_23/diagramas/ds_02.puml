@@ -1,0 +1,38 @@
+@startuml
+title test02SeCompran2EntradasTipoAPagandoConGoldSoloSePagaUna
+Actor ":TestCase"
+
+create Agencia
+":TestCase" -> Agencia
+create "a1: TipoA"
+":TestCase" -> "a1: TipoA"
+create "a2: TipoA"
+":TestCase" -> "a2: TipoA"
+create "g: Gold"
+":TestCase" -> "g: Gold"
+
+":TestCase" -> Agencia: comprarEntradas([b1,b2], g)
+Agencia -> "a1: TipoA": comprar(g)
+"a1: TipoA" -> "a1: TipoA": soporta(g)
+loop Por cada metodo de pago soportado
+    "a1: TipoA" -> MetodoPago: equals(g)
+    MetodoPago --> "a1: TipoA": true
+end
+"a1: TipoA" -> "g: Gold": pagar(600, a1)
+"g: Gold" -> "a1: TipoA": pagar()
+
+Agencia -> "a2: TipoA": comprar(g)
+"a2: TipoA" -> "a2: TipoA": soporta(g)
+loop Por cada metodo de pago soportado
+    "a2: TipoA" -> MetodoPago: equals(g)
+    MetodoPago --> "a2: TipoA": true
+end
+"a2: TipoA" -> "g: Gold": pagar(600, a1)
+
+
+":TestCase" -> "a1: TipoA": estaPagada()
+"a1: TipoA" --> ":TestCase": true
+":TestCase" -> "a2: TipoA": estaPagada()
+"a2: TipoA" --> ":TestCase": false
+
+@enduml

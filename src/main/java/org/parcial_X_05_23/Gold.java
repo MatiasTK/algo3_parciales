@@ -9,7 +9,8 @@ public class Gold implements MetodoPago {
 
     @Override
     public void pagar(int precio, Entrada entrada) {
-        if (precio <= this.limiteCompras) entrada.pagar();
+        if (precio > limiteCompras) return;
+        entrada.pagar();
         limiteCompras -= precio;
     }
 

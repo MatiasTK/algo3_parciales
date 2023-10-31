@@ -21,7 +21,7 @@ public class RecitalTest {
 
         MetodoPago metodo = new PertenenciaH();
 
-        agencia.comprar(entradasAComprar, metodo);
+        agencia.comprarEntradas(entradasAComprar, metodo);
 
         assertTrue(primerEntrada.estaPagada());
         assertTrue(segundaEntrada.estaPagada());
@@ -39,7 +39,7 @@ public class RecitalTest {
 
         MetodoPago metodo = new Gold();
 
-        agencia.comprar(entradasAComprar, metodo);
+        agencia.comprarEntradas(entradasAComprar, metodo);
 
         assertTrue(primerEntrada.estaPagada());
         assertFalse(segundaEntrada.estaPagada());
@@ -61,7 +61,7 @@ public class RecitalTest {
 
         MetodoPago metodo = new PertenenciaH();
 
-        agencia.comprar(entradasAComprar, metodo);
+        agencia.comprarEntradas(entradasAComprar, metodo);
 
         assertTrue(primerEntrada.estaPagada());
         assertTrue(segundaEntrada.estaPagada());

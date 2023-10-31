@@ -1,0 +1,30 @@
+@startuml
+title test01SeCompran2EntradasTipoBPagandoConPertenenciaH
+Actor ":TestCase"
+
+create Agencia
+":TestCase" -> Agencia
+create "b1: TipoB"
+":TestCase" -> "b1: TipoB"
+create "b2: TipoB"
+":TestCase" -> "b2: TipoB"
+create "p: PertenenciaH"
+":TestCase" -> "p: PertenenciaH"
+
+":TestCase" -> Agencia: comprarEntradas([b1,b2], p)
+loop Por cada entrada
+    Agencia -> Entrada: comprar(p)
+    Entrada -> Entrada: soporta(p)
+    loop Por cada metodo de pago soportado
+        Entrada -> MetodoPago: equals(p)
+        MetodoPago --> Entrada: true
+    end
+    Entrada -> MetodoPago: pagar(entrada.precio, Entrada)
+    MetodoPago -> Entrada: pagar()
+end
+":TestCase" -> "b1: TipoB": estaPagada()
+"b1: TipoB" --> ":TestCase": true
+":TestCase" -> "b2: TipoB": estaPagada()
+"b2: TipoB" --> ":TestCase": true
+
+@enduml

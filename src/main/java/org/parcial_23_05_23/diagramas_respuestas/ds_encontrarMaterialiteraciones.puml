@@ -1,0 +1,12 @@
+@startuml
+title Iteraciones de encontrar material
+actor ":TestCase"
+create "e:Edificable"
+":TestCase" ->  "e:Edificable"
+":TestCase" -> "e:Edificable": construir()
+"e:Edificable" -> "e:Edificable": encontrarMaterial(materialesEnExistencia: Array<Material>, materialABuscar:Material)
+loop Por cada material en existencia
+    "e:Edificable" -> Material: equals(materialABuscar)
+end
+
+@enduml

@@ -1,0 +1,88 @@
+@startuml
+
+interface Material {
+    + getCantidad(): int
+    + usar(material: Material)
+}
+
+class Pintura{
+    - cantidad: int
+    + Pintura(cantidad: int)
+    + usar(material: Material)
+    + getCantidad(): int
+}
+
+class Canio{
+    - cantidad: int
+    + Canio(cantidad: int)
+    + usar(material: Material)
+    + getCantidad(): int
+}
+
+class Cemento{
+    - cantidad: int
+    + Cemento(cantidad: int)
+    + usar(material: Material)
+    + getCantidad(): int
+}
+
+interface Edificable {
+    + construir(materiales: ArrayList<Material>)
+}
+
+class Vivienda {
+    - ambientes: int
+    - materialesAmbiente: ArrayList<Material>
+    - materialesBase: ArrayList<Material>
+    + Vivienda(cantidadAmbientes: int)
+    - inicializarMaterialesAmbiente()
+    - inicializarMaterialesBase()
+    - encontrarMaterial(materialesExistencia: ArrayList<Material>, materialABuscar: Material)
+    - construirAmbiente(materialesExistencia: ArrayList<Material>)
+    - construirBase(materialesExistencia: ArrayList<Material>)
+    + construir(materialesExistencia: ArrayList<Material>)
+}
+
+class Edificio{
+    - pisos: int
+    - materialesBase: ArrayList<Material>
+    + Edificio(pisos: int)
+    - inicializarMaterialesBase()
+    - encontrarMaterial(materialesExistencia: ArrayList<Material>, materialABuscar: Material)
+    - construirBase(materialesExistencia: ArrayList<Material>)
+    - construirPlantaBaja(materialesExistencia: ArrayList<Material>)
+    - construirPlanta(materialesNecesarios: ArrayList<Material>, materialesExistencia: ArrayList<Material>)
+    + construir(materialesExistencia: ArrayList<Material>)
+}
+
+class Complejo {
+    - conjunto: ArrayList<Edificable>
+    + Complejo(edificables ArrayList<Edificable>)
+    + construir(materialesExistencia: ArrayList<Material>)
+}
+
+class Constructora{
+    - materiales: ArrayList<Material>
+    + Constructora(Material material)
+    + agregarMaterial(material: Material)
+    + construir(edificable: Edificable)
+}
+
+exception MaterialNoEncontradoError
+
+
+Material <|-- Cemento
+Material <|-- Canio
+Material <|-- Pintura
+
+Edificable <|-- Vivienda
+Edificable <|-- Complejo
+Edificable <|-- Edificio
+
+Edificable -> Material
+MaterialNoEncontradoError <. Edificable
+
+Constructora "1..*" --> Material
+Constructora ..> Edificable
+
+@enduml

@@ -1,0 +1,61 @@
+@startuml
+
+title test01CuantoSobraDeConstruirUnaViviendaDe5Ambientes
+Actor ":TestCase"
+
+create "e: Cemento"
+":TestCase" -> "e: Cemento": Cemento(100)
+create "d: Canio"
+":TestCase" -> "d: Canio": Canio(50)
+create "p: Pintura"
+":TestCase" -> "p: Pintura": Pintura(2500)
+
+create "c: constructora"
+":TestCase" -> "c: constructora": Constructora(e)
+":TestCase" -> "c: constructora": agregarMaterial(d)
+":TestCase" -> "c: constructora": agregarMaterial(p)
+note right: Se agregan todos al array de materiales
+
+create "v: Vivienda"
+":TestCase" -> "v: Vivienda": Vivienda(5)
+
+"v: Vivienda" -> "v: Vivienda": inicializarMaterialesBase()
+create "ea: Cemento"
+"v: Vivienda" -> "ea: Cemento": Cemento(50)
+
+"v: Vivienda" -> "v: Vivienda": InicializarMaterialesAmbiente()
+create "ev: Cemento"
+"v: Vivienda" -> "ev: Cemento": Cemento(10)
+create "dv: Canio"
+"v: Vivienda" -> "dv: Canio": Canio(100)
+create "pv: Pintura"
+"v: Vivienda" -> "pv: Pintura": Pintura(500)
+note right: Se agregan al array de MaterialesNecesarios
+
+":TestCase" -> "c: constructora": construir(v)
+"c: constructora" -> "v: Vivienda": construir(materiales)
+"v: Vivienda" -> "v: Vivienda": construirBase(materiales)
+activate "v: Vivienda"
+    loop Por cada material necesario
+        "v: Vivienda" -> "v: Vivienda": encontrarMaterial(materiales, materialNecesario)
+        "v: Vivienda" -> Material: usar(MaterialNecesario)
+    end
+deactivate
+loop Por cada numero de ambiente
+    "v: Vivienda" -> "v: Vivienda": construirAmbiente(materiales)
+    activate "v: Vivienda"
+        loop Por cada material necesario
+            "v: Vivienda" -> "v: Vivienda": encontrarMaterial(materiales, materialNecesario)
+            "v: Vivienda" -> Material: usar(MaterialNecesario)
+        end
+    deactivate
+end
+
+":TestCase" -> "e: Cemento": obtenerCantidad()
+"e: Cemento" --> ":TestCase": 0
+":TestCase" -> "d: Canio": obtenerCantidad()
+"d: Canio" --> ":TestCase": 0
+":TestCase" -> "p: Pintura": obtenerCantidad()
+"p: Pintura" --> ":TestCase": 0
+
+@enduml
